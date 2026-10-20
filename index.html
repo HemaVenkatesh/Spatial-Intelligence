@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluster Recommendation Engine for Hospitality Profitability Optimization</title>
+    <style>
+        :root {
+            --primary: #0366d6;
+            --bg: #ffffff;
+            --text: #24292e;
+            --muted: #586069;
+            --border: #e1e4e8;
+            --code-bg: #f6f8fa;
+            --accent: #032f62;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        /* GitHub-style header bar */
+        .repo-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+        .repo-header .breadcrumb {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .repo-header .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .repo-header .breadcrumb span { color: var(--muted); }
+        .repo-header .description {
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .badges {
+            margin-top: 8px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .badge-blue { background: #ddf4ff; color: #0550ae; }
+        .badge-green { background: #dafbe1; color: #116329; }
+        .badge-purple { background: #fbefff; color: #8250df; }
+        .badge-orange { background: #fff8c5; color: #9a6700; }
+
+        /* Article content */
+        .article { padding: 0 16px; }
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        p { margin-bottom: 12px; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Author block */
+        .author-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .author-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+        .author-info .name { font-weight: 600; font-size: 16px; }
+        .author-info .affiliation { color: var(--muted); font-size: 14px; }
+
+        /* Image placeholders */
+        .figure-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .image-placeholder {
+            background: var(--code-bg);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 48px 24px;
+            color: var(--muted);
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .image-placeholder .icon { font-size: 32px; }
+        .figure-caption {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background: var(--code-bg);
+            font-weight: 600;
+        }
+        tr:nth-child(even) { background: #f9fafb; }
+        .highlight-row { background: #dafbe1 !important; font-weight: 600; }
+
+        /* Code blocks */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 12px 0;
+            white-space: pre;
+            line-height: 1.5;
+        }
+
+        /* Callout boxes */
+        .callout {
+            border-left: 4px solid var(--primary);
+            background: #f1f8ff;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 14px;
+        }
+        .callout-green {
+            border-left-color: #2da44e;
+            background: #dafbe1;
+        }
+
+        /* Architecture diagram placeholder */
+        .architecture-box {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        .flow-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        .flow-step {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .flow-arrow { color: var(--muted); font-size: 18px; }
+
+        /* Footer */
+        .footer {
+            margin-top: 48px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* TOC */
+        .toc {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+        }
+        .toc-title { font-weight: 600; margin-bottom: 8px; }
+        .toc ul { list-style: none; padding-left: 0; }
+        .toc li { padding: 3px 0; font-size: 14px; }
+        .toc li::before { content: "📌 "; }
+
+        ul, ol { margin: 8px 0 12px 24px; }
+        li { margin-bottom: 4px; font-size: 15px; }
+    </style>
+</head>
+<body>
+
+    <!-- Repo Header -->
+    <div class="repo-header">
+        <div class="breadcrumb">
+            <a href="https://hemavenkatesh.github.io/">hemavenkatesh</a>
+            <span> / </span>
+            <a href="#">cluster-recommendation-engine</a>
+        </div>
+        <div class="description">
+            Cluster Recommendation Engine for Hospitality Profitability Optimization using Text Mining &amp; Geo-Analytics — OYO Rooms (2019-20)
+        </div>
+        <div class="badges">
+            <span class="badge badge-blue">Geo-Analytics</span>
+            <span class="badge badge-green">Text Mining</span>
+            <span class="badge badge-purple">Clustering</span>
+            <span class="badge badge-orange">Profitability +50%</span>
+        </div>
+    </div>
+
+    <!-- Article -->
+    <div class="article">
+
+        <h1>Cluster Recommendation Engine for Hospitality Profitability Optimization</h1>
+        <p><em>A first-of-its-kind spatial intelligence system combining Text Mining and Geo-Analytics to optimize property clustering, improving profitability by 50% across OYO's Frontier businesses.</em></p>
+
+        <!-- Author -->
+        <div class="author-block">
+            <div class="author-avatar">📷</div>
+            <!-- PLACEHOLDER: Replace div above with <img src="your-photo.jpg" class="author-avatar" alt="Hema Venkatesh"> -->
+            <div class="author-info">
+                <div class="name">Hema Venkatesh B</div>
+                <div class="affiliation">Head, Data Analytics — Centre of Excellence, OYO Rooms</div>
+                <div class="affiliation">IIM Ahmedabad · IIT Madras · CFA Level 1</div>
+                <div class="affiliation" style="margin-top:4px;">
+                    <a href="https://hemavenkatesh.github.io/">Portfolio</a> · 
+                    <a href="[LINKEDIN_URL]">LinkedIn</a> · 
+                    <a href="[GITHUB_URL]">GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOC -->
+        <div class="toc">
+            <div class="toc-title">Table of Contents</div>
+            <ul>
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#problem">Problem Statement</a></li>
+                <li><a href="#data">Data Collection &amp; Spatial Mapping</a></li>
+                <li><a href="#clustering">Clustering Methodology</a></li>
+                <li><a href="#text-mining">Text Mining Pipeline</a></li>
+                <li><a href="#geo-analytics">Geo-Analytics Engine</a></li>
+                <li><a href="#recommendation">Recommendation Algorithm</a></li>
+                <li><a href="#results">Results &amp; Business Impact</a></li>
+                <li><a href="#architecture">System Architecture</a></li>
+                <li><a href="#extensions">Extensions &amp; Future Work</a></li>
+            </ul>
+        </div>
+
+        <!-- Abstract -->
+        <h2 id="abstract">Abstract</h2>
+        <p>
+            OYO's rapid expansion across India created a critical challenge: how to optimally cluster properties to maximize profitability while minimizing operational overhead. Existing clustering was manual, inconsistent, and failed to account for spatial demand patterns, competitive density, and property-level performance signals.
+        </p>
+        <p>
+            This project developed a <strong>first-of-its-kind Cluster Recommendation Engine</strong> at OYO, combining <strong>Text Mining</strong> (extracting signals from 10,000+ property listings via web scraping) with <strong>Geo-Analytics</strong> (spatial demand modeling, competitive benchmarking, and location intelligence) to generate data-driven cluster recommendations. The engine improved profitability by <strong>50%</strong> across deployed clusters and became a foundational tool for OYO's expansion strategy.
+        </p>
+
+        <!-- Problem Statement -->
+        <h2 id="problem">I. Problem Statement</h2>
+        <p>
+            OYO Frontier businesses faced a supply-demand mismatch at the cluster level — properties were grouped based on legacy administrative boundaries rather than actual demand patterns, competitive landscape, and guest behavior. This led to:
+        </p>
+        <ul>
+            <li><strong>Sub-optimal pricing:</strong> Properties in high-demand micro-markets priced at par with low-demand zones</li>
+            <li><strong>Inefficient sales deployment:</strong> 500+ sales workforce allocated without spatial demand intelligence</li>
+            <li><strong>Lease cost overruns:</strong> New property acquisitions without location-level benchmarking</li>
+            <li><strong>Revenue leakage:</strong> Cluster-level P&L obscured property-level profitability drivers</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Key Question:</strong> Can we build a data-driven system that recommends optimal property clusters by combining spatial demand signals, competitive intelligence, and property-level text features — to maximize profitability?
+        </div>
+
+        <!-- Data Collection -->
+        <h2 id="data">II. Data Collection &amp; Spatial Mapping</h2>
+
+        <h3>Data Sources</h3>
+        <table>
+            <tr>
+                <th>Source</th>
+                <th>Data Type</th>
+                <th>Volume</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td>OYO Internal</td>
+                <td>Property performance, bookings, revenue</td>
+                <td>[PLACEHOLDER: row count]</td>
+                <td>Profitability baseline &amp; demand signals</td>
+            </tr>
+            <tr>
+                <td>Web Scraping</td>
+                <td>PG listings, competitor pricing, amenities</td>
+                <td>10,000+ listings</td>
+                <td>Competitive benchmarking &amp; text features</td>
+            </tr>
+            <tr>
+                <td>Geolocation APIs</td>
+                <td>Lat/Long, POI data, transit proximity</td>
+                <td>[PLACEHOLDER: coverage area]</td>
+                <td>Spatial feature engineering</td>
+            </tr>
+            <tr>
+                <td>Census / Public Data</td>
+                <td>Population density, commercial zones</td>
+                <td>[PLACEHOLDER]</td>
+                <td>Demand proxy variables</td>
+            </tr>
+        </table>
+
+        <h3>Spatial Mapping</h3>
+        <p>
+            Properties were geocoded and mapped onto spatial grids to enable cluster-level analysis. Each property's micro-market was defined by proximity to demand generators (transit hubs, commercial centers, universities) and competitive density within a defined radius.
+        </p>
+
+        <!-- PLACEHOLDER: City/Region Map -->
+        <div class="figure-container">
+            <div class="image-placeholder">
+                <div class="icon">🗺️</div>
+                <div>PLACEHOLDER: Regional map showing OYO property distribution across target cities</div>
+                <div style="font-size:12px;">[Insert: city_property_distribution_map.png]</div>
+            </div>
+            <div class="figure-caption">Fig. 1 — Property distribution across target cities with demand density overlay</div>
+        </div>
+
+        <!-- PLACEHOLDER: Demand Heatmap -->
+        <div class="figure-container">
+            <div class="image-placeholder">
+                <div class="icon">🔥</div>
+                <div>PLACEHOLDER: Demand heatmap showing booking density by micro-market</div>
+                <div style="font-size:12px;">[Insert: demand_heatmap.png]</div>
+            </div>
+            <div class="figure-caption">Fig. 2 — Booking demand heatmap by micro-market (darker = higher demand)</div>
+        </div>
+
+        <!-- Clustering Methodology -->
+        <h2 id="clustering">III. Clustering Methodology</h2>
+        <p>
+            The clustering approach combined spatial features with property-level performance and text-derived attributes to generate optimal groupings.
+        </p>
+
+        <h3>Feature Engineering</h3>
+        <p>Features were grouped into three categories:</p>
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Features</th>
+                <th>Source</th>
+            </tr>
+            <tr>
+                <td><strong>Spatial</strong></td>
+                <td>Lat/Long, distance to POIs, transit proximity, competitor density within radius</td>
+                <td>Geolocation APIs, Google Maps</td>
+            </tr>
+            <tr>
+                <td><strong>Performance</strong></td>
+                <td>Occupancy rate, ADR, RevPAR, booking frequency, cancellation rate</td>
+                <td>OYO Internal</td>
+            </tr>
+            <tr>
+                <td><strong>Text-Derived</strong></td>
+                <td>Amenity scores, property type classification, review sentiment, pricing tier</td>
+                <td>Web Scraping + NLP</td>
+            </tr>
+        </table>
+
+        <h3>Clustering Algorithm</h3>
+        <p>
+            [PLACEHOLDER: Describe the specific clustering algorithm used — e.g., K-Means, DBSCAN, Hierarchical Clustering, or a custom hybrid approach. Include details on distance metrics, optimal K selection (elbow method / silhouette score), and how spatial constraints were incorporated.]
+        </p>
+
+        <div class="code-block">
+# Pseudocode: Cluster Recommendation Pipeline
+# [PLACEHOLDER: Replace with actual code snippets]
+
+# Step 1: Feature matrix construction
+features = spatial_features + performance_features + text_features
+
+# Step 2: Dimensionality reduction (if applicable)
+reduced = PCA(n_components=k).fit_transform(features)
+
+# Step 3: Optimal cluster selection
+for k in range(2, max_clusters):
+    score = silhouette_score(reduced, KMeans(k).fit_predict(reduced))
+
+# Step 4: Final clustering
+clusters = OptimalModel.fit_predict(feature_matrix)
+
+# Step 5: Profitability scoring per cluster
+cluster_profitability = calculate_profitability(clusters, revenue_data)</div>
+
+        <!-- PLACEHOLDER: Cluster Visualization -->
+        <div class="figure-container">
+            <div class="image-placeholder">
+                <div class="icon">📊</div>
+                <div>PLACEHOLDER: Cluster visualization — properties color-coded by recommended cluster</div>
+                <div style="font-size:12px;">[Insert: cluster_visualization_map.png]</div>
+            </div>
+            <div class="figure-caption">Fig. 3 — Property clusters visualized on city map (each color = one cluster)</div>
+        </div>
+
+        <!-- PLACEHOLDER: Cluster Comparison -->
+        <div class="figure-container">
+            <div class="image-placeholder">
+                <div class="icon">📈</div>
+                <div>PLACEHOLDER: Before vs. After cluster profitability comparison chart</div>
+                <div style="font-size:12px;">[Insert: cluster_profitability_comparison.png]</div>
+            </div>
+            <div class="figure-caption">Fig. 4 — Profitability comparison: Legacy clusters vs. Recommended clusters</div>
+        </div>
+
+        <!-- Text Mining -->
+        <h2 id="text-mining">IV. Text Mining Pipeline</h2>
+        <p>
+            A key differentiator of this engine was the integration of <strong>unstructured text data</strong> from 10,000+ PG and competitor listings, scraped and processed to extract competitive intelligence signals.
+        </p>
+
+        <h3>Pipeline Steps</h3>
+        <ol>
+            <li><strong>Web Scraping:</strong> Automated extraction of property listings, amenities, pricing, and reviews from competitor platforms</li>
+            <li><strong>Text Preprocessing:</strong> Tokenization, stopword removal, lemmatization of listing descriptions and reviews</li>
+            <li><strong>Feature Extraction:</strong> TF-IDF vectorization for amenity categorization; sentiment scoring for review analysis</li>
+            <li><strong>Classification:</strong> Property type classification (budget / mid-range / premium) based on text features</li>
+            <li><strong>Benchmarking:</strong> Price-amenity scoring to identify over/under-priced properties relative to cluster peers</li>
+        </ol>
+
+        <div class="callout">
+            <strong>Innovation:</strong> This was the first time at OYO that unstructured text data from competitor listings was systematically converted into structured features for spatial clustering — enabling a competitive intelligence layer that pure transactional data couldn't provide.
+        </div>
+
+        <!-- Geo-Analytics -->
+        <h2 id="geo-analytics">V. Geo-Analytics Engine</h2>
+        <p>
+            The Geo-Analytics component provided the spatial intelligence layer, modeling demand as a function of location attributes.
+        </p>
+
+        <h3>Location Intelligence Features</h3>
+        <ul>
+            <li><strong>Demand Generators:</strong> Proximity to airports, railway stations, IT parks, universities, hospitals, tourist attractions</li>
+            <li><strong>Competitive Density:</strong> Number of competing properties within 1km / 3km / 5km radius</li>
+            <li><strong>Accessibility Score:</strong> Transit connectivity, road network density, ride-hailing availability</li>
+            <li><strong>Micro-Market Classification:</strong> Commercial, residential, transit hub, tourist zone, mixed-use</li>
+        </ul>
+
+        <p>
+            This location intelligence platform was also independently deployed to <strong>reduce lease costs by 30%</strong> — by benchmarking proposed lease rates against spatial demand potential and competitive pricing within the micro-market.
+        </p>
+
+        <!-- PLACEHOLDER: Geo-Analytics Map -->
+        <div class="figure-container">
+            <div class="image-placeholder">
+                <div class="icon">📍</div>
+                <div>PLACEHOLDER: Geo-analytics overlay — demand generators, competitive density, and cluster boundaries</div>
+                <div style="font-size:12px;">[Insert: geo_analytics_overlay.png]</div>
+            </div>
+            <div class="figure-caption">Fig. 5 — Geo-analytics overlay showing demand generators (green), competitor density (red), and optimized cluster boundaries (blue)</div>
+        </div>
+
+        <!-- Recommendation Algorithm -->
+        <h2 id="recommendation">VI. Recommendation Algorithm</h2>
+        <p>
+            The final recommendation engine combined outputs from clustering, text mining, and geo-analytics into an actionable scoring system.
+        </p>
+
+        <h3>Algorithm Overview</h3>
+        <div class="architecture-box">
+            <div class="flow-steps">
+                <div class="flow-step">📥 Raw Data<br>(Internal + Scraped)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">🔤 Text Mining<br>(NLP Features)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">📍 Geo-Analytics<br>(Spatial Features)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">🔬 Feature Fusion<br>(Combined Matrix)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">🎯 Clustering<br>(Optimal Groups)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">💰 Profitability<br>Scoring</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">✅ Cluster<br>Recommendation</div>
+            </div>
+        </div>
+
+        <p>
+            [PLACEHOLDER: Add detailed algorithm description — scoring weights, optimization objective function, constraints, and how recommendations were ranked and validated.]
+        </p>
+
+        <!-- Results -->
+        <h2 id="results">VII. Results &amp; Business Impact</h2>
+
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Before (Legacy Clusters)</th>
+                <th>After (Recommended Clusters)</th>
+                <th>Impact</th>
+            </tr>
+            <tr class="highlight-row">
+                <td>Cluster Profitability</td>
+                <td>Baseline</td>
+                <td>+50%</td>
+                <td>50% improvement</td>
+            </tr>
+            <tr>
+                <td>Lease Cost Reduction</td>
+                <td>Baseline</td>
+                <td>-30%</td>
+                <td>Via location intelligence platform</td>
+            </tr>
+            <tr>
+                <td>Lead Conversion TAT</td>
+                <td>Baseline</td>
+                <td>-60%</td>
+                <td>Via revamped BD app</td>
+            </tr>
+            <tr>
+                <td>Lead Generation</td>
+                <td>Baseline</td>
+                <td>3x increase</td>
+                <td>Via revamped BD app</td>
+            </tr>
+            <tr>
+                <td>Sales Productivity</td>
+                <td>Baseline</td>
+                <td>+40%</td>
+                <td>Via incentive redesign</td>
+            </tr>
+            <tr>
+                <td>Reporting Automation</td>
+                <td>Manual</td>
+                <td>Automated</td>
+                <td>~500 monthly man-hours saved</td>
+            </tr>
+            <tr>
+                <td>Partner App Adoption</td>
+                <td>N/A</td>
+                <td>95%</td>
+                <td>500+ OYO partners onboarded</td>
+            </tr>
+        </table>
+
+        <div class="callout callout-green">
+            <strong>Key Result:</strong> The Cluster Recommendation Engine was a <strong>first-of-its-kind</strong> at OYO — no prior system combined text mining with geo-analytics for property clustering. It became the foundation for data-driven expansion decisions across Frontier businesses.
+        </div>
+
+        <!-- PLACEHOLDER: Results Chart -->
+        <div class="figure-container">
+            <div class="image-placeholder">
+                <div class="icon">📊</div>
+                <div>PLACEHOLDER: Results visualization — profitability lift by cluster (before vs. after)</div>
+                <div style="font-size:12px;">[Insert: profitability_lift_chart.png]</div>
+            </div>
+            <div class="figure-caption">Fig. 6 — Profitability lift across clusters after recommendation engine deployment</div>
+        </div>
+
+        <!-- Architecture -->
+        <h2 id="architecture">VIII. System Architecture</h2>
+
+        <div class="architecture-box">
+            <h3 style="margin-top:0;">End-to-End Pipeline</h3>
+            <div class="flow-steps">
+                <div class="flow-step">🌐 Web Scraper<br>(10K+ listings)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">🗄️ Data Lake<br>(Raw Storage)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">⚙️ ETL Pipeline<br>(Clean + Transform)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">🧠 ML Engine<br>(Clustering + NLP)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">📊 Dashboard<br>(Recommendations)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">👥 Business Teams<br>(Action)</div>
+            </div>
+            <p style="margin-top:16px; color: var(--muted); font-size:13px;">
+                [PLACEHOLDER: Replace with detailed architecture diagram — include tech stack, data flow, and integration points]
+            </p>
+        </div>
+
+        <!-- Extensions -->
+        <h2 id="extensions">IX. Extensions &amp; Future Work</h2>
+        <ul>
+            <li><strong>Dynamic Re-clustering:</strong> Real-time cluster boundary adjustment based on seasonal demand shifts</li>
+            <li><strong>Deep Learning:</strong> CNN-based image analysis of property photos for quality scoring</li>
+            <li><strong>Graph Networks:</strong> Modeling property-to-property competitive relationships as graph structures</li>
+            <li><strong>Demand Forecasting:</strong> Integrating time-series demand prediction (Prophet / LSTM) into cluster scoring</li>
+            <li><strong>Multi-City Scaling:</strong> Extending the framework to international OYO markets with localized feature engineering</li>
+        </ul>
+
+        <h2>References</h2>
+        <ol>
+            <li>[PLACEHOLDER: Add relevant academic references — spatial clustering, text mining in hospitality, geo-analytics]</li>
+            <li>[PLACEHOLDER: Link to related OYO blog posts or press releases]</li>
+            <li>[PLACEHOLDER: Link to your IEEE / journal publications if applicable]</li>
+            <li>Hema Venkatesh B — <a href="https://hemavenkatesh.github.io/">Personal Portfolio</a></li>
+        </ol>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                © 2025 Hema Venkatesh B · 
+                <a href="https://hemavenkatesh.github.io/">Portfolio</a> · 
+                <a href="[LINKEDIN_URL]">LinkedIn</a> · 
+                <a href="[GITHUB_URL]">GitHub</a>
+            </p>
+            <p style="margin-top:4px;">
+                Built with ❤️ for spatial intelligence and data-driven decision making
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
+
