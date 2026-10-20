@@ -365,8 +365,8 @@
         </table>
 
         <h3>Spatial Mapping</h3>
-        <p>
-            Properties were geocoded and mapped onto spatial grids to enable cluster-level analysis. Each property's micro-market was defined by proximity to demand generators (transit hubs, commercial centers, universities) and competitive density within a defined radius.
+        <p>Overall geographic area was divided into 0.5km * 05km blocks. (For eg. Bangalore had ~2500 grid blocks). Using hexa decimal mapping, each grid block is assigned a score combining spatial_features + performance_features + text_features
+        Properties were geocoded and mapped onto spatial grids to enable cluster-level analysis. Each property's micro-market was defined by proximity to demand generators (transit hubs, commercial centers, universities) and competitive density within a defined radius.
         </p>
 
                 <!-- PLACEHOLDER: Demand Heatmap -->
@@ -374,7 +374,7 @@
             <div class="image-placeholder">
                 <div class="icon">🔥</div>
                 <div>PLACEHOLDER: Demand heatmap showing booking density by micro-market [Representative image with sample data, doesn't reflect actual results]</div>
-                <div style="font-size:12px;">canvas3.png</div>
+                <div style="font-size:12px;">[Insert: canvas3.png]</div>
             </div>
             <div class="figure-caption">Fig. 2 — Booking demand heatmap by micro-market (darker = higher demand)</div>
         </div>
@@ -410,12 +410,7 @@
             </tr>
         </table>
 
-        <h3>Clustering Algorithm</h3>
-        <p>
-            [Overall geographic area was divided into 0.5km * 05km blocks. (For eg. Bangalore had ~2500 grid blocks). Using hexa decimal mapping, each grid block is assigned a score combining spatial_features + performance_features + text_features
-        </p>
-
-        <!-- PLACEHOLDER: Cluster Visualization -->
+       <!-- PLACEHOLDER: Cluster Visualization -->
         <div class="figure-container">
             <div class="image-placeholder">
                 <div class="icon">📊</div>
@@ -425,16 +420,7 @@
             <div class="figure-caption">Fig. 1 — Property clusters visualized on city map (each color = one cluster)</div>
         </div>
 
-        <!-- PLACEHOLDER: Cluster Comparison -->
-        <div class="figure-container">
-            <div class="image-placeholder">
-                <div class="icon">📈</div>
-                <div>PLACEHOLDER: Before vs. After cluster profitability comparison chart</div>
-                <div style="font-size:12px;">profit.png</div>
-            </div>
-            <div class="figure-caption">Fig. 4 — Profitability comparison: Property level P&L improvement (Green indicates contribution positive properties) [Representative sample data, doesn't reflect real data]</div>
-        </div>
-
+        
         <!-- Text Mining -->
         <h2 id="text-mining">IV. Text Mining Pipeline</h2>
         <p>
@@ -476,7 +462,7 @@
             <div class="image-placeholder">
                 <div class="icon">📍</div>
                 <div>PLACEHOLDER: Geo-analytics overlay — demand generators, competitive density, and cluster boundaries</div>
-                <div style="font-size:12px;">[canvas.png]</div>
+                <div style="font-size:12px;">[Insert: canvas2.png]</div>
             </div>
             <div class="figure-caption">Fig. 5 — Geo-analytics overlay showing final clusters and optimized cluster boundaries (blue)</div>
         </div>
@@ -573,9 +559,9 @@
             <div class="image-placeholder">
                 <div class="icon">📊</div>
                 <div>PLACEHOLDER: Results visualization — profitability lift by cluster (before vs. after)</div>
-                <div style="font-size:12px;">profit.png</div>
+                <div style="font-size:12px;">[Insert: profit.png]</div>
             </div>
-            <div class="figure-caption">Fig. 6 — Profitability lift across clusters after recommendation engine deployment</div>
+            <div class="figure-caption">Profitability comparison: Property level P&L improvement (Green indicates contribution positive properties) [Representative sample data, doesn't reflect real data]</div>
         </div>
 
         <!-- Architecture -->
@@ -597,7 +583,6 @@
                 <div class="flow-step">👥 Business Teams<br>(Action)</div>
             </div>
             <p style="margin-top:16px; color: var(--muted); font-size:13px;">
-                [PLACEHOLDER: Replace with detailed architecture diagram — include tech stack, data flow, and integration points]
             </p>
         </div>
 
@@ -605,6 +590,7 @@
         <h2 id="extensions">IX. Extensions &amp; Future Work</h2>
         <ul>
             <li><strong>Dynamic Re-clustering:</strong> Real-time cluster boundary adjustment based on seasonal demand shifts</li>
+            <li><strong>Collinearity</strong> Understanding and predcited cannbilization of demand as property density scaled up
             <li><strong>Deep Learning:</strong> CNN-based image analysis of property photos for quality scoring</li>
             <li><strong>Graph Networks:</strong> Modeling property-to-property competitive relationships as graph structures</li>
             <li><strong>Demand Forecasting:</strong> Integrating time-series demand prediction (Prophet / LSTM) into cluster scoring</li>
@@ -613,10 +599,7 @@
 
         <h2>References</h2>
         <ol>
-            <li>[PLACEHOLDER: Add relevant academic references — spatial clustering, text mining in hospitality, geo-analytics]</li>
             <li>Blog <a href="https://medium.com/@namovenkatesha.hema/cluster-recommendation-engine-for-hospitality-profitability-optimization-c1d032b87a05"></li>
-            <li>[PLACEHOLDER: Link to your IEEE / journal publications if applicable]</li>
-            <li>Hema Venkatesh B — <a href="https://hemavenkatesh.github.io/">Personal Portfolio</a></li>
         </ol>
 
         <!-- Footer -->
