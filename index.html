@@ -369,19 +369,12 @@
             Properties were geocoded and mapped onto spatial grids to enable cluster-level analysis. Each property's micro-market was defined by proximity to demand generators (transit hubs, commercial centers, universities) and competitive density within a defined radius.
         </p>
 
-        <!-- PLACEHOLDER: City/Region Map -->
-      <div class="figure-container">
-    <img src="canvas.png" 
-         alt="Results visualization — profitability lift by cluster (before vs. after)" 
-         style="width: 100%; height: auto; display: block;" />
-    <div class="figure-caption">Fig. 6 — Profitability lift across clusters after recommendation engine deployment</div>
-</div>
-        <!-- PLACEHOLDER: Demand Heatmap -->
+                <!-- PLACEHOLDER: Demand Heatmap -->
         <div class="figure-container">
             <div class="image-placeholder">
                 <div class="icon">🔥</div>
-                <div>PLACEHOLDER: Demand heatmap showing booking density by micro-market</div>
-                <div style="font-size:12px;">[Insert: demand_heatmap.png]</div>
+                <div>PLACEHOLDER: Demand heatmap showing booking density by micro-market [Representative image with sample data, doesn't reflect actual results]</div>
+                <div style="font-size:12px;">canvas3.png</div>
             </div>
             <div class="figure-caption">Fig. 2 — Booking demand heatmap by micro-market (darker = higher demand)</div>
         </div>
@@ -419,37 +412,17 @@
 
         <h3>Clustering Algorithm</h3>
         <p>
-            [PLACEHOLDER: Describe the specific clustering algorithm used — e.g., K-Means, DBSCAN, Hierarchical Clustering, or a custom hybrid approach. Include details on distance metrics, optimal K selection (elbow method / silhouette score), and how spatial constraints were incorporated.]
+            [Overall geographic area was divided into 0.5km * 05km blocks. (For eg. Bangalore had ~2500 grid blocks). Using hexa decimal mapping, each grid block is assigned a score combining spatial_features + performance_features + text_features
         </p>
-
-        <div class="code-block">
-# Pseudocode: Cluster Recommendation Pipeline
-# [PLACEHOLDER: Replace with actual code snippets]
-
-# Step 1: Feature matrix construction
-features = spatial_features + performance_features + text_features
-
-# Step 2: Dimensionality reduction (if applicable)
-reduced = PCA(n_components=k).fit_transform(features)
-
-# Step 3: Optimal cluster selection
-for k in range(2, max_clusters):
-    score = silhouette_score(reduced, KMeans(k).fit_predict(reduced))
-
-# Step 4: Final clustering
-clusters = OptimalModel.fit_predict(feature_matrix)
-
-# Step 5: Profitability scoring per cluster
-cluster_profitability = calculate_profitability(clusters, revenue_data)</div>
 
         <!-- PLACEHOLDER: Cluster Visualization -->
         <div class="figure-container">
             <div class="image-placeholder">
                 <div class="icon">📊</div>
                 <div>PLACEHOLDER: Cluster visualization — properties color-coded by recommended cluster</div>
-                <div style="font-size:12px;">[Insert: cluster_visualization_map.png]</div>
+                <div style="font-size:12px;">canvas.png</div>
             </div>
-            <div class="figure-caption">Fig. 3 — Property clusters visualized on city map (each color = one cluster)</div>
+            <div class="figure-caption">Fig. 1 — Property clusters visualized on city map (each color = one cluster)</div>
         </div>
 
         <!-- PLACEHOLDER: Cluster Comparison -->
@@ -457,9 +430,9 @@ cluster_profitability = calculate_profitability(clusters, revenue_data)</div>
             <div class="image-placeholder">
                 <div class="icon">📈</div>
                 <div>PLACEHOLDER: Before vs. After cluster profitability comparison chart</div>
-                <div style="font-size:12px;">[Insert: cluster_profitability_comparison.png]</div>
+                <div style="font-size:12px;">profit.png</div>
             </div>
-            <div class="figure-caption">Fig. 4 — Profitability comparison: Legacy clusters vs. Recommended clusters</div>
+            <div class="figure-caption">Fig. 4 — Profitability comparison: Property level P&L improvement (Green indicates contribution positive properties) [Representative sample data, doesn't reflect real data]</div>
         </div>
 
         <!-- Text Mining -->
@@ -470,7 +443,7 @@ cluster_profitability = calculate_profitability(clusters, revenue_data)</div>
 
         <h3>Pipeline Steps</h3>
         <ol>
-            <li><strong>Web Scraping:</strong> Automated extraction of property listings, amenities, pricing, and reviews from competitor platforms</li>
+            <li><strong>Web Scraping:</strong> Automated extraction of property listings, amenities, pricing, and reviews from competitor platforms using Beautiful Soup & Selenium</li>
             <li><strong>Text Preprocessing:</strong> Tokenization, stopword removal, lemmatization of listing descriptions and reviews</li>
             <li><strong>Feature Extraction:</strong> TF-IDF vectorization for amenity categorization; sentiment scoring for review analysis</li>
             <li><strong>Classification:</strong> Property type classification (budget / mid-range / premium) based on text features</li>
@@ -489,10 +462,9 @@ cluster_profitability = calculate_profitability(clusters, revenue_data)</div>
 
         <h3>Location Intelligence Features</h3>
         <ul>
-            <li><strong>Demand Generators:</strong> Proximity to airports, railway stations, IT parks, universities, hospitals, tourist attractions</li>
-            <li><strong>Competitive Density:</strong> Number of competing properties within 1km / 3km / 5km radius</li>
-            <li><strong>Accessibility Score:</strong> Transit connectivity, road network density, ride-hailing availability</li>
-            <li><strong>Micro-Market Classification:</strong> Commercial, residential, transit hub, tourist zone, mixed-use</li>
+            <li><strong>Demand Generators and Accessibility Score:</strong> proxy economic activity indicators (No. of ATMs, etc.), Transit connectivity (Proximity to metro, public transport amenities,etc.)</li>
+            <li><strong>Demand Density:</strong> Estiamted demand based on accesibility to high density activity hubs (IT Parks, hospitals, universities) within 1km / 3km / 5km radius</li>
+           <li><strong>Micro-Market Classification:</strong> Commercial, residential, transit hub, tourist zone, mixed-use</li>
         </ul>
 
         <p>
@@ -504,9 +476,9 @@ cluster_profitability = calculate_profitability(clusters, revenue_data)</div>
             <div class="image-placeholder">
                 <div class="icon">📍</div>
                 <div>PLACEHOLDER: Geo-analytics overlay — demand generators, competitive density, and cluster boundaries</div>
-                <div style="font-size:12px;">[Insert: geo_analytics_overlay.png]</div>
+                <div style="font-size:12px;">[canvas.png]</div>
             </div>
-            <div class="figure-caption">Fig. 5 — Geo-analytics overlay showing demand generators (green), competitor density (red), and optimized cluster boundaries (blue)</div>
+            <div class="figure-caption">Fig. 5 — Geo-analytics overlay showing final clusters and optimized cluster boundaries (blue)</div>
         </div>
 
         <!-- Recommendation Algorithm -->
@@ -601,7 +573,7 @@ cluster_profitability = calculate_profitability(clusters, revenue_data)</div>
             <div class="image-placeholder">
                 <div class="icon">📊</div>
                 <div>PLACEHOLDER: Results visualization — profitability lift by cluster (before vs. after)</div>
-                <div style="font-size:12px;">[Insert: profitability_lift_chart.png]</div>
+                <div style="font-size:12px;">profit.png</div>
             </div>
             <div class="figure-caption">Fig. 6 — Profitability lift across clusters after recommendation engine deployment</div>
         </div>
